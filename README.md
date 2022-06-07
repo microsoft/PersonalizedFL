@@ -1,9 +1,9 @@
-# Feds: Federated Learning Toolkit
+# PersonalizedFL: Personalized Federated Learning Toolkit
 
-An easy-to-learn, easy-to-extend, and for-fair-comparison toolkit based on PyTorch for federated learning (fl). 
-Please note that this repository is mainly for research, and we discard lots of unnecessary extensions for a quick start.
+An easy-to-learn, easy-to-extend, and for-fair-comparison toolkit based on PyTorch for federated learning (FL). 
+Please note that this repository is designed mainly for research, and we discard lots of unnecessary extensions for a quick start.
 
-## Implemented Algorithm
+## Implemented Algorithms
 
 As initial version, we support the following algoirthms. We are working on more algorithms. 
 
@@ -16,26 +16,26 @@ As initial version, we support the following algoirthms. We are working on more 
 ## Installation
 
 ```
-git clone 
-cd feds
+git clone git@github.com:microsoft/PersonalizedFL.git
+cd PersonalizedFL
 ```
 We recommend to use `Python 3.7.1` and `torch 1.7.1` which are in our development environment. 
-For more environmental details, please refer to `luwang0517/torch10:latest` (docker) or `jindongwang/docker` (docker).
+For more environmental details and a full re-production of our results, please refer to `luwang0517/torch10:latest` (docker) or `jindongwang/docker` (docker).
 
 ## Dataset
 
 Our code supports the following dataset:
 
-* [vlcs](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/VLCS/VLCS.zip)
-* [pacs](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/PACS.zip)
-* [officehome](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/OfficeHome.zip)
-* [pamap](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/pamap.tar.gz)
-* [covid](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/covid19.tar.gz)
-* [organsmnist](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnist.tar.gz)
-* [organamnist](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistA.tar.gz)
-* [organcmnist](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistC.tar.gz)
+* [VLCS](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/VLCS/VLCS.zip)
+* [PACS](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/PACS.zip)
+* [Office-Home](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/OfficeHome.zip)
+* [PAMAP2](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/pamap.tar.gz)
+* [COVID](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/covid19.tar.gz)
+* [OrganS-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnist.tar.gz)
+* [OrganA-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistA.tar.gz)
+* [OrganC-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistC.tar.gz)
 
-If you want to use your own dataset, please modifty datautil/prepare_data.py to contain the dataset.
+If you want to use your own dataset, please modifty `datautil/prepare_data.py` to contain the dataset.
 
 ## Usage
 
@@ -44,7 +44,7 @@ If you want to use your own dataset, please modifty datautil/prepare_data.py to 
 
 ## Benchmark
 
-We offer a benchmark for organsmnist. Please note that the results are based on the data splits in split/medmnist0.1. Different data splits may lead different results. For complete parameters, please refer to `run.sh`.
+We offer a benchmark for OrganS-MNIST. Please note that the results are based on the data splits in `split/medmnist0.1`. Different data splits may lead different results. For complete parameters, please refer to `run.sh`.
 
 | Non-iid alpha | Base | FedAvg | FedProx | FedBN | FedAP |
 |----------|----------|----------|----------|----------|----------|
@@ -55,9 +55,9 @@ We offer a benchmark for organsmnist. Please note that the results are based on 
 
 It is easy to design your own method following the steps:
 
-1. Add your method to alg/, and add the reference to it in the alg/algs.py
+1. Add your method to `alg/', and add the reference to it in `alg/algs.py`.
 
-2. Midify scripts/run.sh and execuate it
+2. Midify `scripts/run.sh` and execuate it.
 
 
 ## Contribution
@@ -72,15 +72,16 @@ The toolkit is under active development and contributions are welcome! Feel free
 
 [3] Li, Xiaoxiao, et al. "FedBN: Federated Learning on Non-IID Features via Local Batch Normalization." International Conference on Learning Representations. 2021.
 
-[4] Chen, Yiqiang, et al. "Federated Learning with Adaptive Batchnorm for Personalized Healthcare." arXiv preprint arXiv:2112.00734 (2021).
+[4] Lu, Wang, et al. "Personalized Federated Learning with Adaptive Batchnorm for Healthcare." IEEE Transactions on Big Data (2022).
 
 ## Citation
+
 If you think this toolkit or the results are helpful to you and your research, please cite us!
 
 ```
-@Misc{feds,
-howpublished = {\url{https://github.com/jindongwang/}},   
-title = {Feds: Federated Learning Toolkit},  
+@Misc{PersonalizedFL,
+howpublished = {\url{https://github.com/microsoft/PersonalizedFL}},   
+title = {PersonalizedFL: Personalized Federated Learning Toolkit},  
 author = {Lu, Wang and Wang, Jindong}
 }  
 ```
@@ -89,19 +90,6 @@ author = {Lu, Wang and Wang, Jindong}
 
 - Wang lu: luwang@ict.ac.cn
 - [Jindong Wang](http://www.jd92.wang/): jindongwang@outlook.com
-
-
-# Project
-
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
-
-As the maintainer of this project, please make a few updates:
-
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
 
 ## Contributing
 
