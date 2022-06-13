@@ -12,6 +12,7 @@ As initial version, we support the following algoirthms. We are working on more 
 3. FedProx [2].
 4. FedBN [3].
 5. FedAP [4].
+6. MetaFed [5].
 
 ## Installation
 
@@ -73,6 +74,8 @@ The toolkit is under active development and contributions are welcome! Feel free
 [3] Li, Xiaoxiao, et al. "FedBN: Federated Learning on Non-IID Features via Local Batch Normalization." International Conference on Learning Representations. 2021.
 
 [4] Lu, Wang, et al. "Personalized Federated Learning with Adaptive Batchnorm for Healthcare." IEEE Transactions on Big Data (2022).
+
+[5] Yiqiang, Chen, et al. "MetaFed: Federated Learning among Federations with Cyclic Knowledge Distillation for Personalized Healthcare." FL-IJCAI Workshop 2022.
 
 ## Citation
 

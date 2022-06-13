@@ -55,6 +55,6 @@ if __name__ == '__main__':
     print(len(cmdlist))
     print(cmdlist[0])
     try:
-        multi_gpu_launcher(cmdlist,args.pg, [0,1,2,3])
+        multi_gpu_launcher(cmdlist,args.pg, [0,1])
     except Exception as e:
         pass

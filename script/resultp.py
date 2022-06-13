@@ -17,6 +17,25 @@ def getres(alg,dataset,noniid=0.1):
             for item in paraml:
                 s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_'+str(item)+'_'+str(rw[0])+'_'+str(rw[1]))
                 s1.append('python main.py --alg '+alg+' --dataset '+dataset+' --iters '+str(rw[0])+' --wk_iters '+str(rw[1])+' --non_iid_alpha '+str(noniid)+' --model_momentum '+str(item))
+    elif alg in ['metafed']:
+        for rw in rwl:
+            for threshold in [0, 0.4, 0.5, 0.6, 1.1]:
+                if threshold > 1:
+                    s1.append('python main.py --alg '+alg+' --dataset '+dataset+' --iters '+str(rw[0])+' --wk_iters '+str(
+                        rw[1])+' --threshold '+str(threshold)+' --non_iid_alpha '+str(noniid))
+                    s1.append('python main.py --alg '+alg+' --dataset '+dataset+' --iters '+str(rw[0])+' --wk_iters '+str(
+                        rw[1])+' --threshold '+str(threshold)+' --nosharebn'+' --non_iid_alpha '+str(noniid))
+                    s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_0.5_'+str(1)+'_'+str(1.0)+'_'+str(threshold)+'_'+str(rw[0])+'_'+str(rw[1]))    
+                    s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_0.5_'+str(1)+'_'+str(1.0)+'_'+str(threshold)+'_'+str(rw[0])+'_'+str(rw[1]))+'_nosharebn'
+                else:
+                    for lam in [0.1, 1, 5, 10]:
+                        for plan in [0, 1, 2]:
+                            s1.append('python main.py --alg '+alg+' --dataset '+dataset+' --iters '+str(rw[0])+' --wk_iters '+str(rw[1])+' --lam '+str(
+                                lam)+' --threshold '+str(threshold)+' --plan '+str(plan)+' --non_iid_alpha '+str(noniid))
+                            s1.append('python main.py --alg '+alg+' --dataset '+dataset+' --iters '+str(rw[0])+' --wk_iters '+str(rw[1])+' --lam '+str(
+                                lam)+' --threshold '+str(threshold)+' --plan '+str(plan)+' --nosharebn'+' --non_iid_alpha '+str(noniid))     
+                            s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_0.5_'+str(plan)+'_'+str(lam)+'_'+str(threshold)+'_'+str(rw[0])+'_'+str(rw[1]))       
+                            s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_0.5_'+str(plan)+'_'+str(lam)+'_'+str(threshold)+'_'+str(rw[0])+'_'+str(rw[1]))+'_nosharebn'
     else:
         for rw in rwl:
             s.append('fed_'+dataset+'_'+alg+'_0.1_'+str(noniid)+'_0.001_0.5_'+str(rw[0])+'_'+str(rw[1]))    

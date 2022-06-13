@@ -3,13 +3,15 @@ from alg.fedprox import fedprox
 from alg.fedbn import fedbn
 from alg.base import base
 from alg.fedap import fedap
+from alg.metafed import metafed
 
 ALGORITHMS = [
     'fedavg',
     'fedprox',
     'fedbn',
     'base',
-    'fedap'
+    'fedap',
+    'metafed'
 ]
 
 

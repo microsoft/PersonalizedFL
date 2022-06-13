@@ -9,12 +9,13 @@ import numpy as np
 
 from datautil.prepare_data import *
 from util.config import img_param_init, set_random_seed
+from util.evalandprint import evalandprint
 from alg import algs
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--alg', type=str, default='fedavg',
-                        help='Algorithm to choose: [base | fedavg | fedbn | fedprox | fedap]')
+                        help='Algorithm to choose: [base | fedavg | fedbn | fedprox | fedap | metafed ]')
     parser.add_argument('--datapercent', type=float,
                         default=1e-1, help='data percent to use')
     parser.add_argument('--dataset', type=str, default='pacs',
@@ -35,15 +36,23 @@ if __name__ == '__main__':
                         default=0.1, help='data split for label shift')
     parser.add_argument('--partition_data', type=str,
                         default='non_iid_dirichlet', help='partition data way')
+    parser.add_argument('--plan', type=int,
+                        default=1, help='choose the feature type')
     parser.add_argument('--pretrained_iters', type=int,
                         default=150, help='iterations for pretrained models')
     parser.add_argument('--seed', type=int, default=0, help='random seed')
     parser.add_argument('--wk_iters', type=int, default=1,
                         help='optimization iters in local worker between communication')
+    parser.add_argument('--nosharebn', action='store_true',
+                        help='not share bn')
 
     # algorithm-specific parameters
     parser.add_argument('--mu', type=float, default=1e-3,
                         help='The hyper parameter for fedprox')
+    parser.add_argument('--threshold', type=float, default=0.6,
+                        help='threshold to use copy or distillation, hyperparmeter for metafed')
+    parser.add_argument('--lam', type=float, default=1.0,
+                        help='init lam, hyperparmeter for metafed')
     parser.add_argument('--model_momentum', type=float,
                         default=0.5, help='hyperparameter for fedap')
     args = parser.parse_args()
@@ -55,7 +64,9 @@ if __name__ == '__main__':
         args = img_param_init(args)
         args.n_clients = 4
 
-    exp_folder = f'fed_{args.dataset}_{args.alg}_{args.datapercent}_{args.non_iid_alpha}_{args.mu}_{args.model_momentum}_{args.iters}_{args.wk_iters}'
+    exp_folder = f'fed_{args.dataset}_{args.alg}_{args.datapercent}_{args.non_iid_alpha}_{args.mu}_{args.model_momentum}_{args.plan}_{args.lam}_{args.threshold}_{args.iters}_{args.wk_iters}'
+    if args.nosharebn:
+        exp_folder += '_nosharebn'
     args.save_path = os.path.join(args.save_path, exp_folder)
     if not os.path.exists(args.save_path):
         os.makedirs(args.save_path)
@@ -67,6 +78,10 @@ if __name__ == '__main__':
 
     if args.alg == 'fedap':
         algclass.set_client_weight(train_loaders)
+    elif args.alg == 'metafed':
+        algclass.init_model_flag(train_loaders, val_loaders)
+        args.iters = args.iters-1
+        print('Common knowledge accumulation stage')
 
     best_changed = False
 
@@ -77,48 +92,31 @@ if __name__ == '__main__':
     for a_iter in range(start_iter, args.iters):
         print(f"============ Train round {a_iter} ============")
 
-        # local client training
-        for wi in range(args.wk_iters):
-            for client_idx in range(args.n_clients):
+        if args.alg == 'metafed':
+            for c_idx in range(args.n_clients):
                 algclass.client_train(
-                    client_idx, train_loaders[client_idx], a_iter)
+                    c_idx, train_loaders[algclass.csort[c_idx]], a_iter)
+            algclass.update_flag(val_loaders)
+        else:
+            # local client training
+            for wi in range(args.wk_iters):
+                for client_idx in range(args.n_clients):
+                    algclass.client_train(
+                        client_idx, train_loaders[client_idx], a_iter)
 
-        # server aggregation
-        algclass.server_aggre()
-        
-        # evaluation on training data
-        for client_idx in range(args.n_clients):
-            train_loss, train_acc = algclass.client_eval(
-                client_idx, train_loaders[client_idx])
-            print(f' Site-{client_idx:02d} | Train Loss: {train_loss:.4f} | Train Acc: {train_acc:.4f}')
+            # server aggregation
+            algclass.server_aggre()
 
-        # evaluation on valid data
-        val_acc_list = [None] * args.n_clients
-        for client_idx in range(args.n_clients):
-            val_loss, val_acc = algclass.client_eval(
-                client_idx, val_loaders[client_idx])
-            val_acc_list[client_idx] = val_acc
-            print(f' Site-{client_idx:02d} | Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f}')
+        best_acc, best_tacc, best_changed = evalandprint(
+            args, algclass, train_loaders, val_loaders, test_loaders, SAVE_PATH, best_acc, best_tacc, a_iter, best_changed)
 
-        if np.mean(val_acc_list) > np.mean(best_acc):
-            for client_idx in range(args.n_clients):
-                best_acc[client_idx] = val_acc_list[client_idx]
-                best_epoch = a_iter
-            best_changed = True
-
-        if best_changed:
-            print(f' Saving the local and server checkpoint to {SAVE_PATH}')
-            tosave = {'model': algclass.state_dict(
-            ), 'best_epoch': best_epoch, 'best_acc': best_acc}
-            torch.save(tosave, SAVE_PATH)
-            best_changed = False
-            # test
-            for client_idx in range(args.n_clients):
-                _, test_acc = algclass.client_eval(
-                    client_idx, test_loaders[client_idx])
-                print(
-                    f' Test site-{client_idx:02d} | Epoch:{best_epoch} | Test Acc: {test_acc:.4f}')
-                best_tacc[client_idx] = test_acc
+    if args.alg == 'metafed':
+        print('Personalization stage')
+        for c_idx in range(args.n_clients):
+            algclass.personalization(
+                c_idx, train_loaders[algclass.csort[c_idx]], val_loaders[algclass.csort[c_idx]])
+        best_acc, best_tacc, best_changed = evalandprint(
+            args, algclass, train_loaders, val_loaders, test_loaders, SAVE_PATH, best_acc, best_tacc, a_iter, best_changed)
 
     s = 'Personalized test acc for each client: '
     for item in best_tacc:
