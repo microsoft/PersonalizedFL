@@ -9,7 +9,7 @@ from util.traineval import trainwithteacher, test
 class metafed(torch.nn.Module):
     def __init__(self, args):
         super(metafed, self).__init__()
-        _, self.client_model, self.client_weight = modelsel(
+        self.server_model, self.client_model, self.client_weight = modelsel(
             args, args.device)
         self.optimizers = [optim.SGD(params=self.client_model[idx].parameters(
         ), lr=args.lr) for idx in range(args.n_clients)]
