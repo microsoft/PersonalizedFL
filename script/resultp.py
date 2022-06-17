@@ -127,8 +127,8 @@ def getres(alg,dataset,noniid=0.1):
                 args=initmodel()
                 args.alg='metafed'
                 # args.dataset='medmnist'
-                train_loaders, val_loaders, test_loaders = get_data(args.dataset)(args)
-                algclass = algs.get_algorithm_class(args.alg)(args).cuda()
+                # train_loaders, val_loaders, test_loaders = get_data(args.dataset)(args)
+                # algclass = algs.get_algorithm_class(args.alg)(args).cuda()
                 # tacc=0
                 # tmp=[]
                 # for client_idx in range(args.n_clients):
@@ -137,20 +137,21 @@ def getres(alg,dataset,noniid=0.1):
                 #     tmp.append(test_acc)
                 # print(tmp)
                 te=torch.load('./cks/'+item+'/metafed')
-                algclass.load_state_dict(te['model'])
+                # algclass.load_state_dict(te['model'])
                 # print(te['best_epoch'],te['best_acc'])
-                print(te['model'].keys())
-                print(algclass)
-                print(algclass.state_dict())
-                tacc=0
-                tmp=[]
-                with torch.no_grad():
-                    for client_idx in range(args.n_clients):
-                        _, test_acc = algclass.client_eval(client_idx, test_loaders[client_idx])
-                        tacc+=test_acc
-                        tmp.append(test_acc)
-                print(tmp)
-                ts=tacc/args.n_clients
+                # print(te['model'].keys())
+                # print(algclass)
+                # print(algclass.state_dict())
+                # tacc=0
+                # tmp=[]
+                # with torch.no_grad():
+                #     for client_idx in range(args.n_clients):
+                #         _, test_acc = algclass.client_eval(client_idx, test_loaders[client_idx])
+                #         tacc+=test_acc
+                #         tmp.append(test_acc)
+                # print(tmp)
+                # ts=tacc/args.n_clients
+                ts=te['best_tacc']
                 if ts>bes:
                     bes=ts
                     tf=item

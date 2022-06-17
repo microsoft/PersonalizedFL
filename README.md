@@ -47,10 +47,10 @@ If you want to use your own dataset, please modifty `datautil/prepare_data.py` t
 
 We offer a benchmark for OrganS-MNIST. Please note that the results are based on the data splits in `split/medmnist0.1`. Different data splits may lead different results. For complete parameters, please refer to `run.sh`.
 
-| Non-iid alpha | Base | FedAvg | FedProx | FedBN | FedAP |
-|----------|----------|----------|----------|----------|----------|
-| 0.1 | 73.99 | 75.62 | 75.97 | 79.96 | 81.33 |
-| 0.01 | 75.83 | 74.81 | 75.09 | 81.85 | 82.87 |
+| Non-iid alpha | Base | FedAvg | FedProx | FedBN | FedAP | MetaFed |
+|----------|----------|----------|----------|----------|----------|----------|
+| 0.1 | 73.99 | 75.62 | 75.97 | 79.96 | 81.33 | 83.87 |
+| 0.01 | 75.83 | 74.81 | 75.09 | 81.85 | 82.87 | 84.98 |
 
 ## Customization
 
