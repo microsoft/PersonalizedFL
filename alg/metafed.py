@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -5,6 +8,7 @@ import copy
 
 from util.modelsel import modelsel
 from util.traineval import trainwithteacher, test
+
 
 class metafed(torch.nn.Module):
     def __init__(self, args):
@@ -81,7 +85,7 @@ class metafed(torch.nn.Module):
         else:
             lam = (10**(min(1, (v2a-v1a)*5)))/10*self.args.lam
 
-        for wi in range(self.args.wk_iters):
+        for _ in range(self.args.wk_iters):
             train_loss, train_acc = trainwithteacher(
                 model, train_loader, optimizer, self.loss_fun, self.args.device, tmodel, lam, self.args, self.flagl[client_idx])
         return train_loss, train_acc
