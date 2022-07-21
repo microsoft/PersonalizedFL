@@ -57,7 +57,7 @@ We offer a benchmark for OrganS-MNIST. Please note that the results are based on
 
 It is easy to design your own method following the steps:
 
-1. Add your method to `alg/', and add the reference to it in `alg/algs.py`.
+1. Add your method to `alg/`, and add the reference to it in `alg/algs.py`.
 
 2. Midify `scripts/run.sh` and execuate it.
 
