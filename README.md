@@ -18,7 +18,7 @@ As initial version, we support the following algoirthms. We are working on more 
 ## Installation
 
 ```
-git clone git@github.com:microsoft/PersonalizedFL.git
+git clone https://github.com/microsoft/PersonalizedFL.git
 cd PersonalizedFL
 ```
 We recommend to use `Python 3.7.1` and `torch 1.7.1` which are in our development environment. 
