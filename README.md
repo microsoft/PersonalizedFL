@@ -28,14 +28,14 @@ For more environmental details and a full re-production of our results, please r
 
 Our code supports the following dataset:
 
-* [VLCS](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/VLCS/VLCS.zip)
-* [PACS](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/PACS.zip)
-* [Office-Home](https://transferlearningdrive.blob.core.windows.net/teamdrive/dataset/OfficeHome.zip)
-* [PAMAP2](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/pamap.tar.gz)
-* [COVID](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/covid19.tar.gz)
-* [OrganS-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnist.tar.gz)
-* [OrganA-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistA.tar.gz)
-* [OrganC-MNIST](https://dgresearchredmond.blob.core.windows.net/amulet/data/cycfed/medmnistC.tar.gz)
+* [VLCS](https://wjdcloud.blob.core.windows.net/dataset/VLCS/VLCS.zip)
+* [PACS](https://wjdcloud.blob.core.windows.net/dataset/PACS.zip)
+* [Office-Home](https://wjdcloud.blob.core.windows.net/dataset/OfficeHome.zip)
+* [PAMAP2](https://wjdcloud.blob.core.windows.net/dataset/cycfed/pamap.tar.gz)
+* [COVID](https://wjdcloud.blob.core.windows.net/dataset/cycfed/covid19.tar.gz)
+* [OrganS-MNIST](https://wjdcloud.blob.core.windows.net/dataset/cycfed/medmnist.tar.gz)
+* [OrganA-MNIST](https://wjdcloud.blob.core.windows.net/dataset/cycfed/medmnistA.tar.gz)
+* [OrganC-MNIST](https://wjdcloud.blob.core.windows.net/dataset/cycfed/medmnistC.tar.gz)
 
 If you want to use your own dataset, please modifty `datautil/prepare_data.py` to contain the dataset.
 
