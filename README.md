@@ -1,6 +1,8 @@
 # PersonalizedFL: Personalized Federated Learning Codebase
 
-![](logo-personalizedfl2.png)
+<h2 align="center">
+<img src="logo-personalizedfl2.png" width=40%/>
+</h2>
 
 An easy-to-learn, easy-to-extend, and for-fair-comparison codebase based on PyTorch for federated learning (FL). 
 Please note that this repository is designed mainly for research, and we discard lots of unnecessary extensions for a quick start.
