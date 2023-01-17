@@ -1,5 +1,7 @@
 # PersonalizedFL: Personalized Federated Learning Codebase
 
+![](logo-personalizedfl2.png)
+
 An easy-to-learn, easy-to-extend, and for-fair-comparison codebase based on PyTorch for federated learning (FL). 
 Please note that this repository is designed mainly for research, and we discard lots of unnecessary extensions for a quick start.
 Example usage: when you want to recognize activities of different persons without accessing their privacy data; when you want to build a model based on multiple patients' data but not access their own data.
