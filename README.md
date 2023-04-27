@@ -6,6 +6,8 @@ Example usage: when you want to recognize activities of different persons withou
 
 ## Implemented Algorithms
 
+**Note:** The code of [FedCLIP](https://arxiv.org/abs/2302.13485v1) will be released soon. Please stay tuned.
+
 As initial version, we support the following algoirthms. We are working on more algorithms. 
 
 1. Baseline, train in the client without communication.
