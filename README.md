@@ -6,8 +6,6 @@ Example usage: when you want to recognize activities of different persons withou
 
 ## Implemented Algorithms
 
-**Note:** The code of [FedCLIP](https://arxiv.org/abs/2302.13485v1) will be released soon. Please stay tuned.
-
 As initial version, we support the following algoirthms. We are working on more algorithms. 
 
 1. Baseline, train in the client without communication.
@@ -16,6 +14,7 @@ As initial version, we support the following algoirthms. We are working on more 
 4. FedBN [3].
 5. FedAP [4].
 6. MetaFed [5].
+7. FedCLIP [6].
 
 ## Installation
 
@@ -79,6 +78,8 @@ The toolkit is under active development and contributions are welcome! Feel free
 [4] Lu, Wang, et al. "Personalized Federated Learning with Adaptive Batchnorm for Healthcare." IEEE Transactions on Big Data (2022).
 
 [5] Yiqiang, Chen, et al. "MetaFed: Federated Learning among Federations with Cyclic Knowledge Distillation for Personalized Healthcare." FL-IJCAI Workshop 2022.
+
+[6] Lu, Wang, et al. "FedCLIP: Fast Generalization and Personalization for CLIP in Federated Learning." IEEE Data Engineering Bulletin 2023. 
 
 ## Citation
 
