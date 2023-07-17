@@ -16,6 +16,8 @@ As initial version, we support the following algoirthms. We are working on more 
 6. MetaFed [5].
 7. FedCLIP [6].
 
+**NOTE:** The code for FedCLIP is located at [`./fedclip`](./fedclip/). This folder is independent of other folders in this repo. You can just download the folder and run it for this algorithm.
+
 ## Installation
 
 ```
